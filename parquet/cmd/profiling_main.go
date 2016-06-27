@@ -6,7 +6,7 @@ import (
 	"os"
 	"runtime/pprof"
 
-	"github.com/tunelab/parquet-go/parquet"
+	"github.com/TuneLab/parquet-go/parquet"
 )
 
 /*  Profiling to build a call graph. Work aroung the testing faill. */
