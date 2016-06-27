@@ -10,7 +10,32 @@ import "testing"
 
 
 func TestProfileBooleanColumnChunkReader(t *testing.T) {
-	for i := 0; i < 50000; i++ {
+	for i := 0; i < 10000; i++ {
 		TestBooleanColumnChunkReader(t)
 	}
 }
+
+func TestProfileByteArrayColumnChunkReader(t *testing.T) {
+	for i := 0; i < 10000; i++ {
+		TestByteArrayColumnChunkReader(t)
+	}
+}
+
+func TestProfileCreateSchema(t *testing.T) {
+	for i := 0; i < 10000; i++ {
+		TestCreateSchema(t)
+	}
+}
+
+func TestProfileReadFileMetaData(t *testing.T) {
+	for i := 0; i < 10000; i++ {
+		TestReadFileMetaData(t)
+	}
+}
+
+func TestProfileCreateSchemaFromFileMetaDataAndMarshal(t *testing.T) {
+	for i := 0; i < 10000; i++ {
+		TestCreateSchemaFromFileMetaDataAndMarshal(t)
+	}
+}
+
