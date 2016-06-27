@@ -366,7 +366,7 @@ func TestReadFileMetaDataFromInvalidFiles(t *testing.T) {
 	}
 }
 
-func TestreadFileMetaData(t *testing.T) {
+func TestReadFileMetaData(t *testing.T) {
 	r, err := os.Open("testdata/OneRecord.parquet")
 	if err != nil {
 		t.Fatalf("Error: %s", err)
