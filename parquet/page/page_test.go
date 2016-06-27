@@ -50,15 +50,15 @@ func TestEncodeDataPageHeader(t *testing.T) {
 	// }
 
 	// // Page Header
-	// header := parquetformat.NewPageHeader()
+	// header := thrift.NewPageHeader()
 	// header.CompressedPageSize = int32(compressed.Len())
 	// header.UncompressedPageSize = int32(b.Len())
-	// header.Type = parquetformat.PageType_DATA_PAGE
-	// header.DataPageHeader = parquetformat.NewDataPageHeader()
+	// header.Type = thrift.PageType_DATA_PAGE
+	// header.DataPageHeader = thrift.NewDataPageHeader()
 	// header.DataPageHeader.NumValues = int32(enc.NumValues())
-	// header.DataPageHeader.Encoding = parquetformat.Encoding_PLAIN
-	// header.DataPageHeader.DefinitionLevelEncoding = parquetformat.Encoding_BIT_PACKED
-	// header.DataPageHeader.RepetitionLevelEncoding = parquetformat.Encoding_BIT_PACKED
+	// header.DataPageHeader.Encoding = thrift.Encoding_PLAIN
+	// header.DataPageHeader.DefinitionLevelEncoding = thrift.Encoding_BIT_PACKED
+	// header.DataPageHeader.RepetitionLevelEncoding = thrift.Encoding_BIT_PACKED
 	// header.Write(&final)
 	// _, err := io.Copy(&final, &compressed)
 	// if err != nil {
@@ -68,18 +68,18 @@ func TestEncodeDataPageHeader(t *testing.T) {
 	// // ColumnChunk
 	// offset := 0
 	// name := "thisfile.parquet"
-	// chunk := parquetformat.NewColumnChunk()
+	// chunk := thrift.NewColumnChunk()
 	// chunk.FileOffset = int64(offset)
 	// chunk.FilePath = &name
-	// chunk.MetaData = parquetformat.NewColumnMetaData()
+	// chunk.MetaData = thrift.NewColumnMetaData()
 	// chunk.MetaData.TotalCompressedSize = 0
 	// chunk.MetaData.TotalUncompressedSize = 0
-	// chunk.MetaData.Codec = parquetformat.CompressionCodec_SNAPPY
+	// chunk.MetaData.Codec = thrift.CompressionCodec_SNAPPY
 
 	// chunk.MetaData.DataPageOffset = 0
 	// chunk.MetaData.DictionaryPageOffset = nil
 
-	// chunk.MetaData.Type = parquetformat.Type_INT32
+	// chunk.MetaData.Type = thrift.Type_INT32
 	// chunk.MetaData.PathInSchema = []string{"some"}
 
 	// if _, err := chunk.Write(&final); err != nil {
@@ -87,14 +87,14 @@ func TestEncodeDataPageHeader(t *testing.T) {
 	// }
 
 	// // Schema Element
-	// columnSchema := parquetformat.NewSchemaElement()
+	// columnSchema := thrift.NewSchemaElement()
 	// columnSchema.Name = name
 	// columnSchema.NumChildren = nil
 	// columnSchema.Type = typeInt32
 	// columnSchema.RepetitionType = nil
 
 	// // Encoder
-	// eenc := NewEncoder([]*parquetformat.ColumnChunk{})
+	// eenc := NewEncoder([]*thrift.ColumnChunk{})
 	// //eenc.AddRowGroup()
 	// fd, err := os.Create("some.file.parquet")
 	// if err != nil {

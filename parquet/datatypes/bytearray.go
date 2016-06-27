@@ -49,7 +49,7 @@ type ByteArrayColumnChunkReader struct {
 	atLastPage     bool
 	valuesRead     int64
 	dataPageOffset int64
-	header         *parquetformat.PageHeader
+	header         *thrift.PageHeader
 
 	// decoders
 	decoder  *byteArrayPlainDecoder
@@ -58,7 +58,7 @@ type ByteArrayColumnChunkReader struct {
 }
 
 // NewByteArrayColumnChunkReader
-func NewByteArrayColumnChunkReader(r io.ReadSeeker, cs *ColumnSchema, chunk *parquetformat.ColumnChunk) (*ByteArrayColumnChunkReader, error) {
+func NewByteArrayColumnChunkReader(r io.ReadSeeker, cs *ColumnSchema, chunk *thrift.ColumnChunk) (*ByteArrayColumnChunkReader, error) {
 	if chunk.FilePath != nil {
 		return nil, fmt.Errorf("data in another file: '%s'", *chunk.FilePath)
 	}
@@ -70,7 +70,7 @@ func NewByteArrayColumnChunkReader(r io.ReadSeeker, cs *ColumnSchema, chunk *par
 		return nil, fmt.Errorf("missing ColumnMetaData")
 	}
 
-	if meta.Type != parquetformat.Type_BYTE_ARRAY {
+	if meta.Type != thrift.Type_BYTE_ARRAY {
 		return nil, fmt.Errorf("wrong type, expected BYTE_ARRAY was %s", meta.Type)
 	}
 
@@ -80,7 +80,7 @@ func NewByteArrayColumnChunkReader(r io.ReadSeeker, cs *ColumnSchema, chunk *par
 	}
 
 	// uncompress
-	if meta.Codec != parquetformat.CompressionCodec_UNCOMPRESSED {
+	if meta.Codec != thrift.CompressionCodec_UNCOMPRESSED {
 		return nil, fmt.Errorf("unsupported compression codec: %s", meta.Codec)
 	}
 
@@ -94,7 +94,7 @@ func NewByteArrayColumnChunkReader(r io.ReadSeeker, cs *ColumnSchema, chunk *par
 		decoder:        newByteArrayPlainDecoder(),
 	}
 
-	if *schemaElement.RepetitionType == parquetformat.FieldRepetitionType_REQUIRED {
+	if *schemaElement.RepetitionType == thrift.FieldRepetitionType_REQUIRED {
 		// TODO: also check that len(Path) = maxD
 		// For data that is required, the definition levels are not encoded and
 		// always have the value of the max definition level.
@@ -103,7 +103,7 @@ func NewByteArrayColumnChunkReader(r io.ReadSeeker, cs *ColumnSchema, chunk *par
 	} else {
 		cr.dDecoder = newRLE32Decoder(bitWidth(cr.maxLevels.D))
 	}
-	if cr.curLevels.D == 0 && *schemaElement.RepetitionType != parquetformat.FieldRepetitionType_REPEATED {
+	if cr.curLevels.D == 0 && *schemaElement.RepetitionType != thrift.FieldRepetitionType_REPEATED {
 		// TODO: I think we need to check all schemaElements in the path
 		cr.curLevels.R = 0
 		// TODO: clarify the following comment from parquet-format/README:
@@ -122,7 +122,7 @@ func (cr *ByteArrayColumnChunkReader) AtStartOfPage() bool {
 }
 
 // PageHeader returns page header of the current page.
-func (cr *ByteArrayColumnChunkReader) PageHeader() *parquetformat.PageHeader {
+func (cr *ByteArrayColumnChunkReader) PageHeader() *thrift.PageHeader {
 	return cr.header
 }
 
@@ -134,18 +134,18 @@ func (cr *ByteArrayColumnChunkReader) readDataPage() ([]byte, error) {
 	if _, err := cr.r.rs.Seek(cr.dataPageOffset, 0); err != nil {
 		return nil, err
 	}
-	ph := parquetformat.PageHeader{}
+	ph := thrift.PageHeader{}
 	if err := ph.Read(cr.r); err != nil {
 		return nil, err
 	}
-	if ph.Type != parquetformat.PageType_DATA_PAGE {
+	if ph.Type != thrift.PageType_DATA_PAGE {
 		return nil, fmt.Errorf("DATA_PAGE type expected, but was %s", ph.Type)
 	}
 	dph := ph.DataPageHeader
 	if dph == nil {
 		return nil, fmt.Errorf("null DataPageHeader in %+v", ph)
 	}
-	if dph.Encoding != parquetformat.Encoding_PLAIN {
+	if dph.Encoding != thrift.Encoding_PLAIN {
 		return nil, fmt.Errorf("unsupported encoding %s", dph.Encoding)
 	}
 
@@ -193,7 +193,7 @@ func (cr *ByteArrayColumnChunkReader) Next() bool {
 		}
 		//fmt.Printf("%v\n", data)
 		start := 0
-		// TODO: it looks like parquetformat README is incorrect
+		// TODO: it looks like thrift README is incorrect
 		// first R then D
 		if cr.rDecoder != nil {
 			// decode definition levels data

@@ -16,8 +16,8 @@ Documentation is available via
 [![GoDoc](https://godoc.org/github.com/tunelabs/parquet?status.svg)](https://godoc.org/github.com/tunelabs/parquet).
 
 
-[![license](http://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/kostya-sh/parquet-go/master/LICENSE)
-[![Build Status](https://travis-ci.org/kostya-sh/parquet-go.svg?branch=master)](https://travis-ci.org/kostya-sh/parquet-go)
+[![license](http://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/TuneLab/parquet-go/master/LICENSE)
+[![Build Status](https://travis-ci.org/TuneLab/parquet-go.svg?branch=master)](https://travis-ci.org/TuneLab/parquet-go)
 
 
 ## References
