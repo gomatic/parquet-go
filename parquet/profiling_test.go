@@ -6,6 +6,13 @@ import "testing"
 /*  This file is currently for exploration purposes.
     We repeat a test enough times to get a cpu profile, then
     utilize pprof tool to build a call graph.
+
+
+Usage:
+	$ go test -run=<Name of Test> -cpuprofile=cpu.prof
+	$ go tool pprof --pdf parquet.test cpu.prof > <name to save the pdf of callgraph>
+
+	* note: must have GraphViz installed ($ brew install graphviz)
 */
 
 
