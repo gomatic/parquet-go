@@ -9,8 +9,8 @@ import "testing"
 
 
 Usage:
-	$ go test -run=<Name of Test> -cpuprofile=cpu.prof
-	$ go tool pprof --pdf parquet.test cpu.prof > <name to save the pdf of callgraph>
+	$ go test -run=[test name] -cpuprofile=cpu.prof
+	$ go tool pprof --pdf parquet.test cpu.prof > [callgraph pdf name]
 
 	* note: must have GraphViz installed ($ brew install graphviz)
 */
